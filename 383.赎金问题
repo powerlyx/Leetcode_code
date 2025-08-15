@@ -1,0 +1,20 @@
+// 383. 赎金问题
+
+class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+    // vector<int> record(26, 0);
+    int a[26] = {0};
+    if (ransomNote.size() > magazine.size()) {
+            return false;
+        }
+    for(char c: magazine){
+        a[c-'a']++;
+    }
+    for(char c: ransomNote){
+        if( a[c-'a'] <=0) return false;
+        a[c-'a']--;
+    }
+    return true;
+    }
+};
