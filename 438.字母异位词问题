@@ -1,0 +1,35 @@
+// 字母异位词问题，也就是字符串子串问题
+// 注意要定义valid来统计是否相同，并用滑动窗口的思想，调整窗口左边界 和 右边界的移动
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        unordered_map<char, int> word;
+        unordered_map<char, int> need;
+        vector<int> result;
+        for(int i=0; i<p.size(); i++){
+            need[p[i]] ++;
+        }
+        int left =0, right = 0;
+        int valid = 0;
+        while (right < s.size()){
+            char c = s[right++];
+            
+            if( need.count(c)){
+                word[c]++;
+                if( word[c] == need[c])
+                    valid++;
+            }
+           while (right - left >= p.size()) {
+            if (valid == need.size()) {
+                result.push_back(left);
+            }
+            char d = s[left++];
+            if (need.count(d)) {
+                if (word[d] == need[d]) valid--;
+                word[d]--;
+            }
+        }
+    }  
+    return result;
+    }
+};
