@@ -1,0 +1,48 @@
+class Solution {
+public:
+
+    void reverse(string& s, int start, int end){
+        for( int i= start, j=end; i<j; i++,j--){
+            swap(s[i], s[j]);
+        }
+    }
+
+    string reverseWords(string s) {
+        int len = s.size();
+
+        // 删除多余空格
+       int slowIndex = 0;
+       int fastIndex = 0;
+       // 第一个单词前的空格进行跳过
+       while (len >0 && fastIndex <len && s[fastIndex] == ' '){
+        fastIndex ++;
+       }
+
+        // 字符串中间的空格
+       for(; fastIndex<len; fastIndex++){
+        if(fastIndex -1 >0 && s[fastIndex-1] == s[fastIndex] && s[fastIndex] == ' '){
+            continue;
+        }
+        else{s[slowIndex++] = s[fastIndex];}
+       }
+
+       // 最后一个单词后面的空格
+        if (slowIndex-1 >0 && s[slowIndex -1] == ' ') s.resize(slowIndex-1);
+        else s.resize(slowIndex);
+
+
+        // 删除空格之后 整个字符串倒转
+        
+         reverse(s, 0, s.size() - 1);
+        
+        int start = 0;
+        for( int i=0; i<= s.size(); i++){
+            if (s[i] == ' ' || i == s.size()){
+                int end = i-1;
+                reverse(s, start, end);
+                start = i+1;
+            }
+        }
+    return s;
+    }
+};
